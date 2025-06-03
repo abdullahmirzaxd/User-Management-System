@@ -1,36 +1,35 @@
-// Sidebar.jsx
-import React, { useState, useEffect, useContext } from 'react';
-import { Menu, Layout, Drawer } from 'antd';
+import React, { useContext } from "react";
+import { Menu, Layout, Drawer } from "antd";
 import {
   UserOutlined,
   DashboardOutlined,
   SettingOutlined,
-  MenuOutlined,
-} from '@ant-design/icons';
-import { Link, useLocation } from 'react-router-dom';
-import { ThemeContext } from '../context/ThemeContext';
+} from "@ant-design/icons";
+import { Link, useLocation } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 
 const { Sider } = Layout;
 
-function Sidebar() {
+function Sidebar({ isMobile, drawerVisible, onClose }) {
   const location = useLocation();
   const { theme } = useContext(ThemeContext);
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [drawerVisible, setDrawerVisible] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   const menuItems = [
-    { key: '/dashboard', icon: <DashboardOutlined />, label: <Link to="/dashboard">Dashboard</Link> },
-    { key: '/users', icon: <UserOutlined />, label: <Link to="/users">Users</Link> },
-    { key: '/settings', icon: <SettingOutlined />, label: <Link to="/settings">Settings</Link> },
+    {
+      key: "/dashboard",
+      icon: <DashboardOutlined />,
+      label: <Link to="/dashboard">Dashboard</Link>,
+    },
+    {
+      key: "/users",
+      icon: <UserOutlined />,
+      label: <Link to="/users">Users</Link>,
+    },
+    {
+      key: "/settings",
+      icon: <SettingOutlined />,
+      label: <Link to="/settings">Settings</Link>,
+    },
   ];
 
   const sidebarMenu = (
@@ -40,10 +39,10 @@ function Sidebar() {
       selectedKeys={[location.pathname]}
       items={menuItems}
       style={{
-        backgroundColor: theme === 'dark' ? '#282c34' : '#fff',
-        height: '100%',
-        border: 'none',
-        boxShadow: 'none',
+        backgroundColor: theme === "dark" ? "#282c34" : "#fff",
+        height: "100%",
+        border: "none",
+        boxShadow: "none",
         paddingTop: 8,
         paddingBottom: 8,
       }}
@@ -54,21 +53,6 @@ function Sidebar() {
   return (
     <>
       <style>{`
-        /* Reset body and html margins/padding and set full height */
-        html, body, #root {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-          background-color: ${theme === 'dark' ? '#001529' : '#fff'};
-          overflow: hidden;
-        }
-
-        /* Layout container full height */
-        .ant-layout {
-          height: 100vh;
-          background-color: ${theme === 'dark' ? '#001529' : '#fff'};
-        }
-
         .custom-sider {
           height: calc(100vh - 64px);
           position: fixed;
@@ -94,7 +78,6 @@ function Sidebar() {
           color: black;
           border-right: none !important;
         }
-        /* Remove borders/shadows from menu */
         .custom-menu.ant-menu {
           border: none !important;
           box-shadow: none !important;
@@ -103,7 +86,6 @@ function Sidebar() {
           padding-top: 8px;
           padding-bottom: 8px;
         }
-        /* Style each menu item */
         .custom-menu .ant-menu-item {
           border: none !important;
           box-shadow: none !important;
@@ -111,53 +93,34 @@ function Sidebar() {
           padding: 12px 24px !important;
           line-height: 1.5;
         }
-        .hamburger-icon {
-          font-size: 24px;
-          margin-top: 20px;
-          cursor: pointer;
-          color: inherit;
-        }
-        /* Override ant drawer body background */
-        .ant-drawer-body {
-          padding: 0 !important;
-          transition: background-color 0.3s ease;
-        }
       `}</style>
 
-      <Sider
-        width={isMobile ? 60 : 160}
-        className={`custom-sider ${theme}`}
-        breakpoint="md"
-        collapsedWidth={isMobile ? 60 : 160}
-      >
-        {isMobile ? (
-          <MenuOutlined
-            onClick={() => setDrawerVisible(true)}
-            className="hamburger-icon"
-          />
-        ) : (
-          sidebarMenu
-        )}
-      </Sider>
+      {!isMobile && (
+        <Sider width={160} className={`custom-sider ${theme}`}>
+          {sidebarMenu}
+        </Sider>
+      )}
 
-      <Drawer
-        title="Menu"
-        placement="left"
-        onClose={() => setDrawerVisible(false)}
-        open={drawerVisible}
-        bodyStyle={{
-          padding: 0,
-          backgroundColor: theme === 'dark' ? '#282c34' : '#fff',
-          color: theme === 'dark' ? 'white' : 'black',
-          height: '100%',
-        }}
-        headerStyle={{
-          backgroundColor: theme === 'dark' ? '#282c34' : '#fff',
-          color: theme === 'dark' ? 'white' : 'black',
-        }}
-      >
-        {sidebarMenu}
-      </Drawer>
+      {isMobile && (
+        <Drawer
+          title="Menu"
+          placement="left"
+          onClose={onClose}
+          open={drawerVisible}
+          bodyStyle={{
+            padding: 0,
+            backgroundColor: theme === "dark" ? "#282c34" : "#fff",
+            color: theme === "dark" ? "white" : "black",
+            height: "100%",
+          }}
+          headerStyle={{
+            backgroundColor: theme === "dark" ? "#282c34" : "#fff",
+            color: theme === "dark" ? "white" : "black",
+          }}
+        >
+          {sidebarMenu}
+        </Drawer>
+      )}
     </>
   );
 }
