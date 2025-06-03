@@ -30,6 +30,7 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const usersPerPage = 5;
 
+  // Update window width on resize for responsive layout
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
@@ -38,19 +39,23 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const filtered = users.filter(user =>
+  // Filter users by search term (case-insensitive)
+  const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Calculate current page users for pagination
   const start = (page - 1) * usersPerPage;
-  const currentUsers = filtered.slice(start, start + usersPerPage);
+  const currentUsers = filteredUsers.slice(start, start + usersPerPage);
 
+  // Adjust page if filter reduces number of pages
   useEffect(() => {
-    const totalPages = Math.ceil(filtered.length / usersPerPage) || 1;
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage) || 1;
     if (page > totalPages) setPage(totalPages);
-  }, [filtered.length, usersPerPage, page]);
+  }, [filteredUsers.length, page]);
 
-  function onEdit(user) {
+  // Handle edit button click
+  const onEdit = user => {
     setEditId(user.id);
     setShowForm(true);
     form.setFieldsValue({
@@ -60,13 +65,15 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
       date: user.date ? moment(user.date, 'DD-MM-YYYY') : null,
       status: user.status,
     });
-  }
+  };
 
-  function onDelete(id) {
+  // Handle delete user
+  const onDelete = id => {
     dispatch(deleteUser(id));
-  }
+  };
 
-  function onFinish(values) {
+  // Handle form submit for add or update user
+  const onFinish = values => {
     const userData = {
       ...values,
       date: values.date ? values.date.format('DD-MM-YYYY') : '',
@@ -74,7 +81,7 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
 
     if (editId === null) {
       dispatch(addUser({ ...userData, id: Date.now() }));
-      const totalAfterAdd = filtered.length + 1;
+      const totalAfterAdd = filteredUsers.length + 1;
       setPage(Math.ceil(totalAfterAdd / usersPerPage));
     } else {
       dispatch(updateUser({ ...userData, id: editId }));
@@ -83,8 +90,9 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
 
     setShowForm(false);
     form.resetFields();
-  }
+  };
 
+  // Table columns config
   const columns = [
     {
       title: 'Name',
@@ -126,14 +134,18 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
       render: (_, user) => (
         <div style={{ textAlign: 'center' }}>
           <Space>
-            <Button type="link" onClick={() => onEdit(user)}>Edit</Button>
+            <Button type="link" onClick={() => onEdit(user)}>
+              Edit
+            </Button>
             <Popconfirm
               title="Are you sure to delete this user?"
               onConfirm={() => onDelete(user.id)}
               okText="Yes"
               cancelText="No"
             >
-              <Button type="link" danger>Delete</Button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           </Space>
         </div>
@@ -153,7 +165,6 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
       }}
     >
       <style>{`
-        /* Theme styles */
         .dark-row td {
           background-color: #1f1f1f !important;
           color: #fff !important;
@@ -184,10 +195,6 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
           color: #fff !important;
           border-color: #1890ff !important;
         }
-          .ant-table-thead > tr > th {
-  border-radius: 0 !important;
-}
-
 
         /* Responsive flex containers */
         .flex-container {
@@ -206,7 +213,11 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
             border-radius: 8px;
             padding: 16px;
             margin-bottom: 16px;
-            box-shadow: ${theme === 'dark' ? '0 2px 8px rgba(255,255,255,0.05)' : '0 2px 8px rgba(0,0,0,0.1)'};
+            box-shadow: ${
+              theme === 'dark'
+                ? '0 2px 8px rgba(255,255,255,0.05)'
+                : '0 2px 8px rgba(0,0,0,0.1)'
+            };
           }
           .user-card div {
             margin-bottom: 8px;
@@ -242,25 +253,48 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
           setEditId(null);
           form.resetFields();
         }}
-        
+        footer={null}
+        destroyOnClose
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
-          <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter name' }]}>
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: 'Please enter name' }]}
+          >
             <Input placeholder="Enter user name" />
           </Form.Item>
-          <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email', message: 'Enter valid email' }]}>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, type: 'email', message: 'Enter valid email' },
+            ]}
+          >
             <Input placeholder="Enter user email" />
           </Form.Item>
-          <Form.Item name="role" label="Role" rules={[{ required: true, message: 'Select a role' }]}>
+          <Form.Item
+            name="role"
+            label="Role"
+            rules={[{ required: true, message: 'Select a role' }]}
+          >
             <Select placeholder="Select role">
               <Option value="User">User</Option>
               <Option value="Admin">Admin</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="date" label="Date Created" rules={[{ required: true, message: 'Select date' }]}>
+          <Form.Item
+            name="date"
+            label="Date Created"
+            rules={[{ required: true, message: 'Select date' }]}
+          >
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="status" label="Status" rules={[{ required: true, message: 'Select status' }]}>
+          <Form.Item
+            name="status"
+            label="Status"
+            rules={[{ required: true, message: 'Select status' }]}
+          >
             <Select placeholder="Select status">
               <Option value="Active">Active</Option>
               <Option value="unActive">unActive</Option>
@@ -268,8 +302,16 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
           </Form.Item>
           <Form.Item>
             <Space>
-              <Button type="primary" htmlType="submit">Save</Button>
-              <Button onClick={() => { setShowForm(false); setEditId(null); form.resetFields(); }}>
+              <Button type="primary" htmlType="submit">
+                Save
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowForm(false);
+                  setEditId(null);
+                  form.resetFields();
+                }}
+              >
                 Cancel
               </Button>
             </Space>
@@ -280,53 +322,66 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
       {/* Add User Button */}
       <div className="flex-container" style={{ marginBottom: 24 }}>
         <Button
+          type="primary"
           icon={<PlusOutlined />}
-          onClick={() => setShowForm(true)}
-          style={{
-            backgroundColor: theme === 'dark' ? '#555' : '#1890ff',
-            borderColor: theme === 'dark' ? '#777' : '#1890ff',
-            color: '#fff',
-            minWidth: '120px',
-            flexShrink: 0,
+          onClick={() => {
+            setShowForm(true);
+            setEditId(null);
+            form.resetFields();
           }}
         >
           Add User
         </Button>
       </div>
 
-      {/* Table for large screens */}
-      <Table
-        className={`responsive-table ${theme === 'dark' ? 'dark-table' : 'light-table'}`}
-        columns={columns}
-        dataSource={currentUsers}
-        rowKey="id"
-        pagination={false}
-        rowClassName={() => (theme === 'dark' ? 'dark-row' : 'light-row')}
-        style={{
-          backgroundColor: theme === 'dark' ? '#1f1f1f' : '#fff',
-          color: theme === 'dark' ? '#fff' : '#000',
-        }}
-      />
-
-      {/* Card layout for small screens */}
-      {windowWidth <= 767 && (
+      {/* Responsive User List: Table for desktop, cards for mobile */}
+      {windowWidth >= 768 ? (
+        <Table
+          className={theme === 'dark' ? 'dark-table' : 'light-table'}
+          dataSource={currentUsers}
+          columns={columns}
+          rowKey="id"
+          pagination={false}
+          rowClassName={(record, index) =>
+            theme === 'dark' ? 'dark-row' : 'light-row'
+          }
+          locale={{ emptyText: 'No users found' }}
+        />
+      ) : (
         <div>
+          {currentUsers.length === 0 && (
+            <p style={{ textAlign: 'center' }}>No users found</p>
+          )}
           {currentUsers.map(user => (
             <div key={user.id} className="user-card">
-              <div><strong>Name:</strong> {user.name}</div>
-              <div><strong>Email:</strong> {user.email}</div>
-              <div><strong>Role:</strong> {user.role}</div>
-              <div><strong>Date Created:</strong> {user.date}</div>
-              <div><strong>Status:</strong> {user.status}</div>
+              <div>
+                <strong>Name:</strong> {user.name}
+              </div>
+              <div>
+                <strong>Email:</strong> {user.email}
+              </div>
+              <div>
+                <strong>Role:</strong> {user.role}
+              </div>
+              <div>
+                <strong>Date Created:</strong> {user.date}
+              </div>
+              <div>
+                <strong>Status:</strong> {user.status}
+              </div>
               <div className="actions">
-                <Button type="link" onClick={() => onEdit(user)}>Edit</Button>
+                <Button type="link" onClick={() => onEdit(user)}>
+                  Edit
+                </Button>
                 <Popconfirm
                   title="Are you sure to delete this user?"
                   onConfirm={() => onDelete(user.id)}
                   okText="Yes"
                   cancelText="No"
                 >
-                  <Button type="link" danger>Delete</Button>
+                  <Button type="link" danger>
+                    Delete
+                  </Button>
                 </Popconfirm>
               </div>
             </div>
@@ -335,16 +390,15 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
       )}
 
       {/* Pagination */}
-      <div className="flex-container" style={{ marginTop: 16 }}>
-        <Pagination
-          className="custom-pagination"
-          current={page}
-          pageSize={usersPerPage}
-          total={filtered.length}
-          onChange={p => setPage(p)}
-          showSizeChanger={false}
-        />
-      </div>
+      <Pagination
+        className="custom-pagination"
+        current={page}
+        pageSize={usersPerPage}
+        total={filteredUsers.length}
+        onChange={p => setPage(p)}
+        showSizeChanger={false}
+        style={{ marginTop: 16, textAlign: 'center' }}
+      />
     </div>
   );
 }

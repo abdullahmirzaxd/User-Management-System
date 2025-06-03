@@ -73,7 +73,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 function CustomChart() {
   const { theme } = useContext(ThemeContext);
 
-  // Dynamic styles based on theme
+ 
   const sectionBg = theme === 'dark' ? '#1f1f1f' : '#fff';
   const textColor = theme === 'dark' ? '#ccc' : '#333';
   const headingColor = theme === 'dark' ? '#bbb' : '#555';

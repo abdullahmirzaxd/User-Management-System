@@ -1,69 +1,61 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
-import { Input, Button } from 'antd';
-import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
-
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 function SearchBar({ searchTerm, setSearchTerm }) {
-  const [isVisible, setIsVisible] = useState(false);
   const { theme } = useContext(ThemeContext);
   const isDark = theme === 'dark';
 
-  const toggleSearch = () => {
-    setIsVisible(prev => !prev);
-    if (isVisible) setSearchTerm('');
-  };
-
   return (
-    <div
-      style={{
-        margin: '16px 0',
-        padding: '16px',
-        backgroundColor: isDark ? '#121212' : '#f9f9f9',
-        borderRadius: '12px',
-        boxShadow: isDark
-          ? '0 2px 6px rgba(255, 255, 255, 0.05)'
-          : '0 2px 6px rgba(0, 0, 0, 0.1)',
-        transition: 'background-color 0.3s ease',
-        textAlign: 'center',
-      }}
-    >
-      <Button
-        icon={isVisible ? <CloseOutlined /> : <SearchOutlined />}
-        onClick={toggleSearch}
-        style={{
-          marginBottom: isVisible ? 12 : 0,
-          backgroundColor: isDark ? '#555' : '#1890ff',
-          borderColor: isDark ? '#777' : '#1890ff',
-          color: '#fff',
-        }}
-      >
-        {isVisible ? 'Close Search' : 'Search Users'}
-      </Button>
+    <>
+      <style>{`
+        .search-bar-container {
+          margin: 16px 0;
+          padding: 8px 16px;
+          border-radius: 12px;
+          transition: background-color 0.3s ease, box-shadow 0.3s ease;
+          background-color: ${isDark ? '#1e1e1e' : '#ffffff'};
+          box-shadow: ${isDark
+            ? '0 2px 8px rgba(255, 255, 255, 0.05)'
+            : '0 2px 8px rgba(0, 0, 0, 0.1)'};
+        }
 
-      {isVisible && (
+        .search-input {
+          width: 100%;
+          border-radius: 8px;
+          padding-left: 40px;
+          height: 40px;
+          font-size: 15px;
+          background-color: ${isDark ? '#2b2b2b' : '#f5f5f5'};
+          color: ${isDark ? '#fff' : '#000'};
+          border: 1px solid ${isDark ? '#444' : '#ddd'};
+        }
+
+        .search-input:focus {
+          border-color: ${isDark ? '#888' : '#40a9ff'};
+          box-shadow: 0 0 0 2px ${isDark ? 'rgba(136,136,136,0.3)' : 'rgba(24,144,255,0.2)'};
+          outline: none;
+        }
+
+        .search-icon {
+          color: ${isDark ? '#aaa' : '#888'};
+          font-size: 16px;
+        }
+      `}</style>
+
+      <div className="search-bar-container">
         <Input
           id="search-users"
-          className={isDark ? 'dark-input' : 'light-input'}
-          prefix={<SearchOutlined style={{ color: isDark ? '#ccc' : '#888' }} />}
-          placeholder="Search users by name"
+          prefix={<SearchOutlined className="search-icon" />}
+          placeholder="Search users..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: '100%',
-            maxWidth: '300px',
-            borderRadius: '6px',
-            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
-            padding: '6px 12px',
-            marginTop: '8px',
-            backgroundColor: isDark ? '#1f1f1f' : '#fff',
-            color: isDark ? '#fff' : '#000',
-            border: isDark ? '1px solid #555' : '1px solid #d9d9d9',
-            
-          }}
+          className="search-input"
+          allowClear
         />
-      )}
-    </div>
+      </div>
+    </>
   );
 }
 

@@ -1,3 +1,4 @@
+// Sidebar.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { Menu, Layout, Drawer } from 'antd';
 import {
@@ -7,13 +8,13 @@ import {
   MenuOutlined,
 } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
-import { ThemeContext } from '../context/ThemeContext';  // Import your ThemeContext
+import { ThemeContext } from '../context/ThemeContext';
 
 const { Sider } = Layout;
 
 function Sidebar() {
   const location = useLocation();
-  const { theme } = useContext(ThemeContext);  // Get theme from context
+  const { theme } = useContext(ThemeContext);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -34,7 +35,7 @@ function Sidebar() {
 
   const sidebarMenu = (
     <Menu
-      theme={theme}  // Use theme from context
+      theme={theme}
       mode="inline"
       selectedKeys={[location.pathname]}
       items={menuItems}
@@ -53,6 +54,21 @@ function Sidebar() {
   return (
     <>
       <style>{`
+        /* Reset body and html margins/padding and set full height */
+        html, body, #root {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          background-color: ${theme === 'dark' ? '#001529' : '#fff'};
+          overflow: hidden;
+        }
+
+        /* Layout container full height */
+        .ant-layout {
+          height: 100vh;
+          background-color: ${theme === 'dark' ? '#001529' : '#fff'};
+        }
+
         .custom-sider {
           height: calc(100vh - 64px);
           position: fixed;
@@ -111,6 +127,8 @@ function Sidebar() {
       <Sider
         width={isMobile ? 60 : 160}
         className={`custom-sider ${theme}`}
+        breakpoint="md"
+        collapsedWidth={isMobile ? 60 : 160}
       >
         {isMobile ? (
           <MenuOutlined
@@ -131,6 +149,7 @@ function Sidebar() {
           padding: 0,
           backgroundColor: theme === 'dark' ? '#282c34' : '#fff',
           color: theme === 'dark' ? 'white' : 'black',
+          height: '100%',
         }}
         headerStyle={{
           backgroundColor: theme === 'dark' ? '#282c34' : '#fff',

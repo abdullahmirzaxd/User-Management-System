@@ -13,4 +13,14 @@
   color: white;
 }
 
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #f0f2f5; /* Or dark background if in dark mode */
+}
+
+.ant-layout {
+  background: transparent !important;
+}
 
