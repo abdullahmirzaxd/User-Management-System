@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { ThemeProvider } from './ThemeContext';
 import MainLayout from './components/MainLayout';

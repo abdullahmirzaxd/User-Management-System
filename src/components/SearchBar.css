@@ -1,0 +1,74 @@
+.search-bar-container {
+  margin: 16px 0;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar-container.light {
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar-container.dark {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+.search-input {
+  width: 100%;
+  border-radius: 8px;
+  padding-left: 40px;
+  height: 40px;
+  font-size: 15px;
+  border: 1px solid;
+  transition: all 0.3s ease;
+}
+
+/* Light mode input */
+.search-input.light {
+  background-color: #f5f5f5;
+  color: #000;
+  border-color: #ddd;
+}
+
+/* Light mode placeholder */
+.search-input.light::placeholder,
+.search-input.light input::placeholder {
+  color: #888 !important;
+}
+
+/* Dark mode input */
+.search-input.dark {
+  background-color: #2b2b2b;
+  color: #fff;
+  border-color: #444;
+}
+
+/* Dark mode placeholder */
+.search-input.dark::placeholder,
+.search-input.dark input::placeholder {
+  color: #aaa !important;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-input.light:focus {
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.search-input.dark:focus {
+  border-color: #888;
+  box-shadow: 0 0 0 2px rgba(136, 136, 136, 0.3);
+}
+
+.search-icon.light {
+  color: #888;
+}
+
+.search-icon.dark {
+  color: #aaa;
+}

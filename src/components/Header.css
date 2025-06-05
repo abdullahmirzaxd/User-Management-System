@@ -1,0 +1,91 @@
+.custom-header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px !important;
+  line-height: 64px !important;
+  padding: 0 16px !important;
+  z-index: 1000 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #eee;
+  color: black;
+  background: white;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.custom-header.dark {
+  background: #001529;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid #222;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 12px;
+  color: inherit;
+}
+
+.ant-design-logo {
+  font-size: 28px;
+  color: #1890ff;
+  cursor: default;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .ant-design-logo {
+    font-size: 24px;
+  }
+}
+
+.theme-switch.ant-switch {
+  width: 44px;
+  height: 22px;
+  background-color: #ccc;
+  border-radius: 11px;
+  transition: background-color 0.4s ease;
+}
+
+.custom-header.dark .theme-switch.ant-switch {
+  background-color: #444;
+}
+
+.theme-switch.ant-switch-checked {
+  background-color: #999;
+}
+
+.custom-header.dark .theme-switch.ant-switch-checked {
+  background-color: #555;
+}
+
+.theme-switch .ant-switch-handle {
+  width: 20px;
+  height: 20px;
+  top: 1px;
+  left: 1px;
+  border-radius: 10px;
+  background: #fff;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.theme-switch.ant-switch-checked .ant-switch-handle {
+  left: 23px;
+}
+
+.theme-switch .ant-switch-inner {
+  display: none; 
+}

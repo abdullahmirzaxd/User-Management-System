@@ -6,7 +6,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter> {/* ✅ Wrap with BrowserRouter */}
+    <BrowserRouter> 
       <ThemeProvider>
         <App />
       </ThemeProvider>

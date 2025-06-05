@@ -1,27 +1,24 @@
-/* Header: fixed height */
 .App-header {
   height: 64px;
-  line-height: 64px; /* vertically center text if any */
+  line-height: 64px; 
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; /* make sure it's on top */
+  z-index: 1000;
 }
 
-/* Sidebar: fixed width and full height below header */
 .Sidebar {
   position: fixed;
-  top: 64px;       /* below header */
+  top: 64px;
   left: 0;
   width: 160px;
   height: calc(100vh - 64px);
-  background-color: #001529; /* default antd sidebar color or your custom */
+  background-color: #001529;
   overflow-y: auto;
   z-index: 999;
 }
 
-/* Main content: shifted to right and below header */
 .MainContent {
   margin-left: 160px;
   margin-top: 64px;

@@ -30,7 +30,7 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const usersPerPage = 5;
 
-  // Update window width on resize for responsive layout
+
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
@@ -39,22 +39,21 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Filter users by search term (case-insensitive)
+
   const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Calculate current page users for pagination
+
   const start = (page - 1) * usersPerPage;
   const currentUsers = filteredUsers.slice(start, start + usersPerPage);
 
-  // Adjust page if filter reduces number of pages
   useEffect(() => {
     const totalPages = Math.ceil(filteredUsers.length / usersPerPage) || 1;
     if (page > totalPages) setPage(totalPages);
   }, [filteredUsers.length, page]);
 
-  // Handle edit button click
+
   const onEdit = user => {
     setEditId(user.id);
     setShowForm(true);
@@ -67,12 +66,10 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
     });
   };
 
-  // Handle delete user
   const onDelete = id => {
     dispatch(deleteUser(id));
   };
 
-  // Handle form submit for add or update user
   const onFinish = values => {
     const userData = {
       ...values,
@@ -92,7 +89,7 @@ function UserTable({ showForm, setShowForm, searchTerm }) {
     form.resetFields();
   };
 
-  // Table columns config
+
   const columns = [
     {
       title: 'Name',

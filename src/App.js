@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 import { Provider } from 'react-redux';
