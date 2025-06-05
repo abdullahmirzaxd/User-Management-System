@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+User Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a **React** application for managing users, built using Create React App.
+
+---
+
+## How to Set Up and Run the App
+
+Follow these steps to get the app running on your local machine.
+
+### 1. Install Visual Studio Code (VS Code)
+
+VS Code is the recommended code editor for this project.
+
+* Download and install VS Code from [https://code.visualstudio.com/](https://code.visualstudio.com/)
+* After installation, open VS Code.
+
+---
+
+### 2. Install Node.js and npm
+
+Node.js is required to run the React app and manage packages.
+
+* Download and install Node.js (which includes npm) from [https://nodejs.org/](https://nodejs.org/)
+* Verify installation by running these commands in a terminal:
+
+```bash
+node -v
+npm -v
+```
+
+Both should output the installed versions.
+
+---
+
+### 3. Clone this repository
+
+Open your terminal or VS Code terminal and run:
+
+```bash
+git clone https://github.com/abdullahmirzaxd/User-Management-System.git
+cd User-Management-System
+```
+
+---
+
+### 4. Install dependencies
+
+Inside the project directory, run:
+
+```bash
+npm install
+```
+
+This command installs all required packages listed in `package.json`.
+
+---
+
+### 5. Recommended VS Code extensions (optional but helpful)
+
+* **ES7+ React/Redux/React-Native snippets** — Provides React snippets for faster coding
+* **Prettier - Code formatter** — Auto-formats your code
+* **ESLint** — Linting and code quality checking
+* **npm Intellisense** — Helps auto-complete npm modules
+* **Path Intellisense** — Auto-completes file paths
+
+You can search and install these from the VS Code Extensions Marketplace.
+
+---
+
+### 6. Run the React app
+
+Start the development server with:
+
+```bash
+npm start
+```
+
+* This will open [http://localhost:3000](http://localhost:3000) in your browser.
+* The app will reload automatically when you make changes.
+* Any lint or compilation errors will appear in the terminal or browser console.
+
+---
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, you can also run:
 
-### `npm start`
+* `npm test` — Runs the test suite.
+* `npm run build` — Builds the app for production.
+* `npm run eject` — Ejects the build setup (irreversible).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* React documentation: [https://reactjs.org/](https://reactjs.org/)
+* Create React App documentation: [https://facebook.github.io/create-react-app/docs/getting-started](https://facebook.github.io/create-react-app/docs/getting-started)
