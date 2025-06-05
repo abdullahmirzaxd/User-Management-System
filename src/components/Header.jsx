@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Layout, Switch } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { MenuOutlined, AntDesignOutlined } from "@ant-design/icons";
 import { ThemeContext } from "../context/ThemeContext";
 
 const { Header: AntHeader } = Layout;
@@ -35,8 +35,21 @@ function Header({ isMobile, onHamburgerClick }) {
         .hamburger-icon {
           font-size: 24px;
           cursor: pointer;
-          margin-right: 16px;
+          margin-right: 12px;
           color: ${theme === "dark" ? "#fff" : "#000"};
+        }
+        .ant-design-logo {
+          font-size: 28px;
+          color: ${theme === "dark" ? "#1890ff" : "#1890ff"};
+          cursor: default;
+          user-select: none;
+          transition: color 0.3s ease;
+        }
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+          .ant-design-logo {
+            font-size: 24px;
+          }
         }
       `}</style>
 
@@ -47,8 +60,10 @@ function Header({ isMobile, onHamburgerClick }) {
             <MenuOutlined
               className="hamburger-icon"
               onClick={onHamburgerClick}
+              aria-label="Open navigation menu"
             />
           )}
+          <AntDesignOutlined className="ant-design-logo" aria-label="Ant Design Logo" />
         </div>
 
         {/* Right side */}
@@ -57,6 +72,7 @@ function Header({ isMobile, onHamburgerClick }) {
           onChange={toggleTheme}
           checkedChildren="🌙"
           unCheckedChildren="☀️"
+          aria-label="Toggle theme"
         />
       </AntHeader>
     </>

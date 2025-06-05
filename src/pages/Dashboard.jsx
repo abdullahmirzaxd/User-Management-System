@@ -3,7 +3,6 @@ import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
   CartesianGrid, Legend, PieChart, Pie, Cell
 } from 'recharts';
-
 import { ThemeContext } from '../context/ThemeContext';
 
 const data = [
@@ -57,27 +56,26 @@ const CustomTooltip = ({ active, payload, label }) => {
         color: textColor,
         fontSize: '14px',
         boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-        lineHeight: '1.6',
-        border: `1px solid ${borderColor}`
+        border: `1px solid ${borderColor}`,
+        lineHeight: '1.6'
       }}>
-        <p><strong style={{ color: theme === 'dark' ? '#ccc' : '#555' }}>Month:</strong> <span>{label}</span></p>
-        <p><strong style={{ color: '#66ccff' }}>Income:</strong> <span>${income.toLocaleString()}</span></p>
-        <p><strong style={{ color: '#ff6666' }}>Expenses:</strong> <span>${expenses.toLocaleString()}</span></p>
-        <p><strong style={{ color: '#66ff66' }}>Percent Spent:</strong> <span>{percent}%</span></p>
+        <p><strong>Month:</strong> {label}</p>
+        <p><strong style={{ color: '#66ccff' }}>Income:</strong> ${income.toLocaleString()}</p>
+        <p><strong style={{ color: '#ff6666' }}>Expenses:</strong> ${expenses.toLocaleString()}</p>
+        <p><strong style={{ color: '#66ff66' }}>Percent Spent:</strong> {percent}%</p>
       </div>
     );
   }
   return null;
 };
 
-function CustomChart() {
+function Dashboard() {
   const { theme } = useContext(ThemeContext);
 
- 
   const sectionBg = theme === 'dark' ? '#1f1f1f' : '#fff';
   const textColor = theme === 'dark' ? '#ccc' : '#333';
   const headingColor = theme === 'dark' ? '#bbb' : '#555';
-  const axisStroke = theme === 'dark' ? '#888' : '#8884d8';
+  const axisStroke = theme === 'dark' ? '#999' : '#8884d8';
   const gridStroke = theme === 'dark' ? '#333' : '#e0e0e0';
 
   return (
@@ -85,115 +83,79 @@ function CustomChart() {
       <style>
         {`
           .dashboard-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* remove background-color and padding here */
-  
-  max-width: 1200px;
-  margin: 0 auto;  /* center it */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  color: ${textColor};
-  background-color: ${theme === 'dark' ? '#1f1f1f' : '#fff'}; /* keep container bg */
-  padding: 20px; /* padding inside container */
-}
-
-            <div
-  className="outer-wrapper"
-  style={{
-    backgroundColor: theme === 'dark' ? '#121212' : '#f5f7fa',
-    padding: '30px',   
-    minHeight: '100vh',
-    boxSizing: 'border-box'
-  }}
->
+            font-family: 'Segoe UI', sans-serif;
+            background-color: ${theme === 'dark' ? '#121212' : '#f4f7fa'};
+            color: ${textColor};
+            padding: 30px;
+            min-height: 100vh;
+          }
 
           .header {
-            margin-bottom: 30px;
             text-align: center;
+            margin-bottom: 40px;
           }
 
           .header h1 {
             font-size: 2.5rem;
-            margin: 0;
+            margin-bottom: 10px;
             color: ${textColor};
           }
 
           .header p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: ${headingColor};
-            margin-top: 8px;
           }
 
-          .charts-container {
+          .main-layout {
             display: flex;
-            gap: 40px;
+            gap: 30px;
+            flex-direction: row;
             flex-wrap: wrap;
-            padding: 20px;
-            align-items: stretch; /* Ensure equal height */
           }
 
-          .line-chart-section,
-          .pie-charts-container {
+          .line-chart-section {
+            flex: 2;
+            min-width: 300px;
             background-color: ${sectionBg};
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            flex: 1 1 600px;
-            min-width: 320px;
-            width: 100%;
-            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          }
+
+          .pie-charts-column {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* remove center alignment */
-            color: ${textColor};
-          }
-
-          .line-chart-section h2,
-          .pie-charts-container h2 {
-            margin-bottom: 20px;
-            color: ${headingColor};
-            text-align: center;
-          }
-
-          .pie-charts-row {
-            display: flex;
-            flex-wrap: wrap;
             gap: 20px;
-            justify-content: center;
-            width: 100%;
-            margin-top: auto;
+            min-width: 280px;
           }
 
-          .pie-chart-wrapper {
+          .pie-chart-box {
+            background-color: ${sectionBg};
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
-            width: 100%;
-            max-width: 280px;
-            padding: 10px;
-            box-sizing: border-box;
-            color: ${textColor};
           }
 
-          .pie-chart-wrapper h3 {
-            font-size: 1rem;
+          .pie-chart-box h3 {
             margin-bottom: 10px;
-          }
-
-          /* Responsive Layouts */
-          @media (min-width: 900px) {
-            .charts-container {
-              flex-wrap: nowrap;
-            }
-            .pie-charts-container {
-              min-width: 300px;
-              max-width: 300px;
-            }
+            color: ${headingColor};
           }
 
           @media (max-width: 768px) {
-            .charts-container {
+            .main-layout {
               flex-direction: column;
             }
-            .pie-chart-wrapper {
-              width: 45%;
+
+            .pie-charts-column {
+              flex-direction: row;
+              justify-content: space-around;
+              flex-wrap: wrap;
+            }
+
+            .pie-chart-box {
+              flex: 1 1 45%;
             }
           }
         `}
@@ -201,80 +163,75 @@ function CustomChart() {
 
       <div className="dashboard-container">
         <header className="header">
-          <h1>Financial Overview Dashboard</h1>
-          <p>Track your monthly income, expenses, and savings</p>
+          <h1>Financial Dashboard</h1>
+          <p>Monitor income, expenses, and savings trends</p>
         </header>
 
-        <div className="charts-container">
+        <div className="main-layout">
           <section className="line-chart-section">
-            <h2>Monthly Income vs Expenses</h2>
-            <div style={{ height: 450 }}>
+            <h2 style={{ textAlign: 'center', color: headingColor, marginBottom: '20px' }}>Monthly Trends</h2>
+            <div style={{ height: 400 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                <LineChart data={data}>
                   <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-                  <XAxis dataKey="month" stroke={axisStroke} strokeWidth={2} tick={{ fill: textColor, fontSize: 12 }} />
-                  <YAxis stroke={axisStroke} strokeWidth={2} tick={{ fill: textColor, fontSize: 12 }} />
+                  <XAxis dataKey="month" stroke={axisStroke} tick={{ fill: textColor }} />
+                  <YAxis stroke={axisStroke} tick={{ fill: textColor }} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Legend verticalAlign="top" height={36} wrapperStyle={{ color: textColor }} />
-                  <Line type="monotone" dataKey="income" stroke="#1890ff" strokeWidth={3} dot={{ r: 5 }} />
-                  <Line type="monotone" dataKey="expenses" stroke="#ff4d4f" strokeWidth={3} dot={{ r: 5 }} />
+                  <Legend verticalAlign="top" wrapperStyle={{ color: textColor }} />
+                  <Line
+                    type="monotone"
+                    dataKey="income"
+                    stroke="#1890ff"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="expenses"
+                    stroke="#ff4d4f"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </section>
 
-          <section className="pie-charts-container">
-            <h2>Summary Pie Charts</h2>
-            <div className="pie-charts-row">
-              <div className="pie-chart-wrapper">
-                <h3>Income vs Expenses</h3>
-                <ResponsiveContainer width="100%" height={250}>
-                  <PieChart>
-                    <Pie
-                      data={pieData1}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={70}
-                      label
-                    >
-                      {pieData1.map((entry, index) => (
-                        <Cell key={`cell1-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '14px', color: textColor }} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-
-              <div className="pie-chart-wrapper">
-                <h3>Savings vs Expenses</h3>
-                <ResponsiveContainer width="100%" height={250}>
-                  <PieChart>
-                    <Pie
-                      data={pieData2}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={70}
-                      label
-                    >
-                      {pieData2.map((entry, index) => (
-                        <Cell key={`cell2-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '14px', color: textColor }} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
+          <div className="pie-charts-column">
+            <div className="pie-chart-box">
+              <h3>Income vs Expenses</h3>
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie data={pieData1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label>
+                    {pieData1.map((entry, index) => (
+                      <Cell key={`cell1-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: '14px', color: textColor }} />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
-          </section>
+
+            <div className="pie-chart-box">
+              <h3>Savings vs Expenses</h3>
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie data={pieData2} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label>
+                    {pieData2.map((entry, index) => (
+                      <Cell key={`cell2-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Legend verticalAlign="bottom" wrapperStyle={{ fontSize: '14px', color: textColor }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
       </div>
     </>
   );
 }
 
-export default CustomChart;
+export default Dashboard;

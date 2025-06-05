@@ -3,7 +3,7 @@ import { Menu, Layout, Drawer } from "antd";
 import {
   UserOutlined,
   DashboardOutlined,
-  SettingOutlined,
+ 
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
@@ -25,11 +25,7 @@ function Sidebar({ isMobile, drawerVisible, onClose }) {
       icon: <UserOutlined />,
       label: <Link to="/users">Users</Link>,
     },
-    {
-      key: "/settings",
-      icon: <SettingOutlined />,
-      label: <Link to="/settings">Settings</Link>,
-    },
+   
   ];
 
   const sidebarMenu = (
@@ -70,7 +66,7 @@ function Sidebar({ isMobile, drawerVisible, onClose }) {
           box-shadow: 2px 0 6px rgba(0,0,0,0.2);
         }
         .custom-sider.dark {
-          background-color: #282c34;
+          background-color: #001529;
           color: white;
         }
         .custom-sider.light {
